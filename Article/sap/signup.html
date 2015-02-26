@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <title>浙江大学软件学院</title>
+    <script src="Scripts/jquery.min.js"></script>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            $("[name='name'],[name='phone'],input[name='bkzy']").val('');
+
+            $(":submit").click(function () {
+
+                var dataObject = {
+                    XingMing: trim($("[name='name']").first().val()),
+                    XingBie: $("[name='gender'][checked]").val(),
+                    ShouJi: trim($("[name='phone']").first().val()),
+                    BeiYongDianHua: trim($("[name='phone2']").first().val()),
+                    Email: trim($("[name='email']").first().val()),
+                    QQ:trim($("[name='qq']").first().val()),
+                    BenKeZhuanYe: trim($("[name='bkzy']").first().val()),
+                    BiYeXueXiao: trim($("[name='byyx']").first().val()),
+                    BaoKaoZhuanYe: trim($("[name='selectMajor']").first().val()),
+                    from: "浙江大学"
+                };
+
+                if (dataObject.XingMing.length == 0) {
+                    alert('请输入姓名.');
+                    return;
+                }
+
+                if (dataObject.ShouJi.length == 0) {
+                    alert('请输入手机号.');
+                    return;
+                }
+
+                if (dataObject.BenKeZhuanYe.length == 0) {
+                    alert('请填写毕业专业.');
+                    return;
+                }
+
+                $.ajax({
+                    type: 'get',
+                    url: 'http://218.247.27.203/signup/Handler.ashx',
+                    data: dataObject,
+                    dataType: "jsonp",
+                    jsonp: "callback",
+                    success: function (response) {
+                        if (response.success === true) {
+                            alert('提交成功,请等待审核。');
+                            window.location.reload();
+                        } else {
+                            alert('提交失败，请稍后再试。')
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            function trim(str) {
+                return str.replace(/(^\s*)|(\s*$)/g, '');
+            }
+        });
+    </script>
+</head>
+<body>
+    <nav role="navigation" class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="index.html" class="navbar-brand"><i class="glyphicon glyphicon-menu-left"></i></a>
+                <p class="navbar-text">预报名</p>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="padding-bottom:70px;">
+        <p></p>
+        <div class="form-group">
+            <label for="username">姓名：</label>
+            <input type="text" class="form-control" name="name" id="username" required placeholder="姓名">
+        </div>
+        <div class="form-group">
+            <label>性别：</label>
+            <div class="radio">
+                <label class="checkbox-inline">
+                    <input type="radio" name="gender" id="male" value="男" checked>男
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="gender" id="female" value="女">女
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone">联系电话：</label>
+            <input type="text" class="form-control" name="phone" id="phone" required placeholder="联系电话">
+        </div>
+        <div class="form-group">
+            <label for="phone2">备用电话：</label>
+            <input type="text" class="form-control" name="phone2" id="phone2" placeholder="备用电话">
+        </div>
+        <div class="form-group">
+            <label for="email">邮箱：</label>
+            <input type="email" class="form-control" name="email" id="email" required placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="qq">QQ：</label>
+            <input type="text" class="form-control" name="qq" id="qq" placeholder="qq">
+        </div>
+        <div class="form-group">
+            <label for="byyx">本科毕业院校：</label>
+            <input type="text" class="form-control" name="byyx" id="byyx" placeholder="本科毕业院校">
+        </div>
+        <div class="form-group">
+            <label for="bkzy">本科专业：</label>
+            <input type="text" class="form-control" name="bkzy" id="bkzy" placeholder="本科专业">
+        </div>
+        <div class="form-group">
+            <label for="bkzy">报考专业：</label>
+            <select class="form-control" name="selectMajor">
+                <option value="SAP咨询顾问方向">SAP咨询顾问方向</option>
+                <optgroup label="信息安全">
+                    <option value="信息安全咨询服务方向">信息安全咨询服务方向</option>
+                    <option value="信息安全技术管理方向">信息安全技术管理方向</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-block btn-success">提交</button>
+    </div>
+
+    <div id="foot-emnu">
+        <ul>
+            <li>
+                <a href="index.html"><i class="glyphicon glyphicon-home"></i>首页</a>
+            </li>
+            <li>
+                <a href="brochure.html"><i class="glyphicon glyphicon-th-large"></i>专业方向</a>
+            </li>
+            <li>
+                <a href="signup.html"><i class="glyphicon glyphicon-pencil"></i>预报名</a>
+            </li>
+            <li>
+                <a href="contact.html"><i class="glyphicon glyphicon-map-marker"></i>联系我们</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
