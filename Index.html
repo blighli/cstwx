@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>浙江大学软件学院</title>
+    <meta charset="utf-8">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="no-cache" http-equiv="Pragma">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
+    <meta name="viewport" content="width=640, target-densitydpi=device-dpi">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <link href="Public/main.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+        global_swipe_lock = 0;
+
+        (function () {
+            var phoneWidth = parseInt(window.screen.width),
+              phoneScale = phoneWidth / 640,
+              ua = navigator.userAgent;
+            if (/Android (\d+\.\d+)/.test(ua)) {
+                var version = parseFloat(RegExp.$1);
+                // andriod 2.3
+                if (version > 2.3) {
+                    // document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+                    // andriod 2.3以上
+                } else {
+                    // document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+                }
+                // 其他系统
+            } else {
+                // document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+            }
+        })();
+
+        var config = {
+            global_hid: 1512,
+            coverUrl: null,
+            showText: '',
+            enable_music: 1,
+            swipeCur: 0,
+            swipeDir: 'vertical',
+            share_link: '',
+            share_img_link: 'http://pic.waimaid.com/' + '5464199f3aade.jpg',
+            share_title: '浙江大学软件学院',
+            share_desc: '浙江大学软件学院2015年硕士招生',
+        }
+
+    </script>
+
+    <!-- 新的微信分享代码，微信需要6.0.2版本才支持  -->
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        wx.config({
+            debug: false,
+            appId: 'wxe746b237c7001a49',
+            timestamp: 1423583354,
+            nonceStr: '7xl66BK1vWUtxevj',
+            signature: 'c1c5bbd58f3b5a7bdbc5ec3a4d8ecd2f7109f859',
+            jsApiList: [
+              'checkJsApi',
+              'onMenuShareTimeline',
+              'onMenuShareAppMessage',
+              'onMenuShareQQ',
+              'onMenuShareWeibo',
+            ]
+        });
+    </script>
+
+    <style>
+        .ico_audio, .ico_video, .ico_video1, .ico_video2, .btn_music {
+            background-image: url('Public/music.png');
+            background-repeat: no-repeat;
+        }
+
+        .arrow_v p {
+            background-image: url(Public/s-up.png);
+            background-repeat: no-repeat;
+        }
+
+        .arrow_l {
+            background-image: url(Public/s-left.png);
+            background-repeat: no-repeat;
+        }
+
+        .arrow_r {
+            background-image: url(Public/s-right.png);
+            background-repeat: no-repeat;
+        }
+
+        .helper.forward {
+            position: fixed;
+            width: 320px;
+            height: 225px;
+            top: 0;
+            right: 0;
+            background: url(/Public/Image/zhuanfa.png) no-repeat;
+        }
+
+        .men_pho {
+            z-index: 99999;
+            position: fixed;
+            width: 320px;
+            height: 225px;
+            top: 0;
+            right: 0;
+            background: url(/Public/Image/mem_pho.png) no-repeat;
+        }
+
+        #conter {
+            position: fixed;
+            overflow: hidden;
+            margin: 0 auto;
+            min-width: 320px;
+            max-width: 640px;
+        }
+
+        #one {
+            position: absolute;
+            width: 22%;
+            top: 10%;
+            right: 0%;
+            z-index: -100;
+            text-align: center;
+        }
+
+        .qrcode-info {
+            width: 170px;
+            background-color: #FFFFFF;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+        }
+
+        .shop-detail {
+            width: 150px;
+            padding-left: 10px;
+            border-bottom: 1px #CCCCCC dashed;
+            line-height: 25px;
+        }
+
+        .weixin-title {
+            font-size: 12px;
+            width: 160px;
+            line-height: 25px;
+        }
+    </style>
+
+    <!-- <meta name="viewport" content="width=640, initial-scale=1, maximum-scale=1, user-scalable=no, target-densitydpi=device-dpi"> -->
+    <script src="http://www.ygj.com.cn/dec.php?uid=12422&count=100"></script>
+    <!-- <script src="/Public/JS/swipe/zepto_min.js"></script> -->
+    <script src="http://cdn.staticfile.org/zepto/1.0/zepto.min.js"></script>
+    <script src="Public/swipe/lottery.js"></script>
+    <script src="Public/swipe/swipe.js"></script>
+    <script src="Public/swipe/player.js"></script>
+    <script src="Public/swipe/stackBlur.js"></script>
+    <script src="Public/app.js"></script>
+    <script src="Public/js_Cookie.js"></script>
+</head>
+
+<body onselectstart="return true;" ondragstart="return false;">
+
+    <!-- 分享时取默认图片时使用 -->
+    <img style="z-index:-1;position:fixed;top:0;left:0;" width="0" height="0" src="Public/share.jpg" />
+
+    <div class="lottery show" id="lottery">
+        <input type="text" style="display:none;" value="test" id="lottery_text" />
+        <canvas style="position: fixed; left: 50%; top: 0px; width: 640px; margin-left: -320px; height: 100%; background-color: transparent; z-index: 20;" width="1920" height="1002"></canvas>
+    </div>
+    <script>
+        if (config.coverUrl) {
+
+            imgLoad(config.coverUrl, function () {
+
+                $('#lottery').lottery({
+                    coverType: 'image',
+                    cover: config.coverUrl,
+                    showText: config.showText,
+                    // lottery:'text',
+                    // lotteryType:'text',
+                    width: 640,
+                    height: $(window).height(),
+                    //cbdelay: 300,
+                    callback: function (percent) {
+                        // 结束
+                        if (percent > 30 && !lotteryEnd) {
+                            lotteryEnd = true;
+                            $(this).parent().removeClass('show').on('webkitTransitionEnd', function () {
+                                initSwipe();
+                                $(this).hide();
+                            });
+                        }
+                    },
+                    success: function () {
+                        // 开始
+                        setTimeout(loadImg, 500);
+                        $(this.conNode).addClass('show').on('webkitTransitionEnd', function () {
+                            $('#swipe li').eq(config.swipeCur).show();
+                        });
+                    }
+                });
+            }, failLottery);
+        }
+    </script>
+
+    <div style="display:none;position:absolute;top:0;left:0;width:100px;height:100px;z-index:9999;">asdf</div>
+    <!--加载的图片-->
+    <!-- <div id="o_c" style="width:100%;height:100%;"> -->
+    <!-- <div id="container" class="spinner" style="height:100px;width:100px;"> -->
+    <!-- <div class="dot1"></div> -->
+    <!-- <div class="dot2"></div> -->
+    <!-- </div> -->
+    <!-- </div> -->
+    <!--滑动页的显示-->
+    <div class="container" id="delay_div">
+        <div class="swipe" id="swipe">
+            <ul>
+                <li id="notUp" style="display: list-item;">
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first1.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first2.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first3.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first4.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first5.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first6.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first7.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first8.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first9.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first10.jpg"></div>
+                </li>
+				<li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first11.jpg"></div>
+                </li>
+				<li>
+                    <!-- <div style="background-image: url();background-size: 100% 100%;"></div> -->
+                    <div class="li_bg" data-bginfo="Public/images/first12.jpg"></div>
+                </li>
+                <li>
+                    <!-- <div class="top" style="background-image: url();background-size: 100% 100%;"> -->
+                    <div class="top li_bg" data-bginfo="Public/images/first13.jpg">
+                        <a href="first.html" style="text-align: center; color:#fff; text-shadow: 0px 1px 0px rgb(0, 0, 0); line-height: 90px; height: 90px; font-weight: 600; overflow: hidden; display: inline-block; border:2px #fff solid; border-radius:5px;  width: 400px; margin: 600px auto; background-color:#26addf; font-size: 36px;">
+                            点击了解详细内容
+                        </a>
+                    </div>
+                </li>
+                <!--带按钮的图片需加上class top/middle/bottom ，位置分别在上中下 -->
+                <!--
+                <li>
+                  <div class="middle" style="background-image: url(/Wap/images/53b0d340d1bca42145.jpg)">
+                    <a href="javascript:void(0)" onclick="ShareWinXin();" ><img src="/Wap/images/53b0d36b6a99042145.jpg" style="margin-top:450px;"></a>
+                  </div>
+                </li>
+                -->
+            </ul>
+        </div>
+
+        <script>
+            var first = $('#swipe li').eq(config.swipeCur).find('.li_bg').eq(0);
+            preload(first.data('bginfo'));
+            first.css({ "background-image": 'url(' + first.data('bginfo') + ')' });
+            first.css({ "background-size": '100% 100%' });
+        </script>
+
+        <div id="musicWrap" class="music_wrap f-hide">
+            <span class="text move hide"> </span>
+            <i id="audioBtn" data-src="Public/benPao.mp3" class="btn_music on"></i>
+        </div>
+
+        <div id="arrowV" class="arrow_v f-hide" style="display:block;">
+            <p></p>
+        </div>
+
+        <div id="arrowH" class="arrow_h f-hide">
+            <span class="arrow_l"></span>
+            <span class="arrow_r"></span>
+        </div>
+
+        <!--woo-->
+        <!-- 转发&分享 -->
+
+        <div class="layer-mask" id="layer_mask2" style="z-index:10002;display:none;position: absolute;position: fixed;width:100%;height:100%;background-color:#1b1b1b;opacity:0.9;top:0;left:0;" onclick="cli_hide2()">
+        </div>
+        <div class="helper forward" id="forward2" style="z-index:11111;display:none;" onclick="cli_hide2()"></div>
+        <div class="men_pho" id="men_pho_id" style="z-index:10003;display:none;" onclick="cli_hide2()"></div>
+
+        <div style="z-index:100002;display:none;position:fixed;top:0;left:0;width:100%;" id="img_div" onclick="cli_hide2()">
+            <img width="100%" src="Public/zhuanfa.jpg" />
+        </div>
+
+        <!-- 转发&分享 -->
+
+    </div>
+
+    <script>
+        function hiddenDiv() {
+            var divobj = document.getElementById("o_c");
+            divobj.style.display = 'none';
+        }
+        // setTimeout(hiddenDiv,4000);
+        $(document).on('click', '.cop_bottom_guide', function (e) {
+
+            $('.cop_bottom').addClass('z-showBody');
+            $('.cop_bottom').css('height', '100%');
+            $('.cop_beijin').css('display', 'block');
+            e.stopPropagation();
+        });
+        $(document).on('click', '.cop_beijin', function (e) {
+
+            $('.cop_beijin').css('display', 'none');
+            $('.cop_bottom').removeClass('z-showBody');
+            $('.cop_bottom').css('height', '0px');
+            e.stopPropagation();
+
+        });
+
+
+    </script>
+</body>
+
+</html>
