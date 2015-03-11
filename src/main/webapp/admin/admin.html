@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>浙江大学软件学院预报名管理系统</title>
+	<script src="../Scripts/jquery.min.js"></script>
+	<script src="../Scripts/bootstrap.min.js"></script>
+	<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" />
+	<!-- Custom styles for this template -->
+	<link href="../css/admin.css" rel="stylesheet" />
+</head>
+<script>
+$(function () {
+	var curPage=1;
+	var totalPage=0;
+	//获取总页数
+	$.ajax({
+		type: 'get',
+        url: 'getTotalPage',
+        dataType: "json", 
+        success: function (response) {
+        	if(response.isLogin == false){
+            	alert("您尚未登陆，请先登陆！");
+            	location.href ="login.html";
+            	return;
+            }
+        	totalPage = response.totalPage;
+        	if(totalPage !=0 ){
+        		getData(curPage);
+        	}
+        	setPage();
+        }
+	});
+function setPage(){
+	var lastPage = $("#lastPage");
+	var nextPage = $("#nextPage");
+	lastPage.click(function(){
+		curPage--;
+		getData(curPage);
+	});
+	nextPage.click(function(){
+		curPage++;
+		getData(curPage);
+	});
+	if(curPage<=1){
+		$("#lastPage").attr('disabled',true);
+	}
+	else{
+		$("#lastPage").attr('disabled',false);
+	}
+	if(curPage>=totalPage){
+		$("#nextPage").attr('disabled',true);
+	}
+	else{
+		$("#nextPage").attr('disabled',false);
+	}
+}
+	//获取数据
+	function getData(page){
+		$.ajax({
+			type: 'get',
+	        url: 'getData',
+	        data: {'page':page},
+	        dataType: "json",
+	        success: function (response) {
+	        	if(response.isLogin == false){
+	            	alert("您尚未登陆，请先登陆！");
+	            	location.href ="login.html";
+	            	return;
+	            }
+	        	if(response.success == true){
+	        		var data = response.data;
+	        		loadData(data);
+	        	}
+	        	else{
+	        		alert("数据获取失败，请稍后再试");	
+	        	}
+	        }
+		});	
+	}
+	function loadData(data){
+	    for( i in data){
+	    	var tr=$("<tr></tr>");
+	    	$("tbody").append(tr);
+	    	var td=$("<td>"+data[i].xingming+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td>"+data[i].xingbie+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td>"+data[i].shouji+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td>"+data[i].beiyongdianhua+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td>"+data[i].email+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td>"+data[i].qq+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td>"+data[i].byyx+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td>"+data[i].byzy+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td>"+data[i].bkzy+"</td>");
+	    	tr.append(td);
+	    	var td=$("<td><input type=\"checkbox\" value="+data[i].id+"></td>");
+	    	tr.append(td);
+	    }
+	}
+});
+    function logout(){
+    	$.ajax({
+    		type: 'post',
+            url: 'logout',
+            dataType: "json",
+            success: function (response) {
+                if(response.isLogin == false){
+                	alert("您尚未登陆，请先登陆！");
+                	location.href ="login.html";
+                	return;
+                }
+            	if(response.success == true){
+            		alert("退出成功");
+            		location.href="login.html";
+            	}
+            	else{
+            		alert("退出失败！");
+            		window.location.reload();
+            	}
+            }
+    	});
+    }
+    function confirms(){
+    	if($("input[type='checkbox']").is(":checked")){
+    		$('#warn').modal('toggle');
+    	}else{
+    		alert("请选择要删除的数据！");
+    	}
+    }
+ 	function deleteStu(){
+ 		var delId = {ids:[]}
+ 		$.each($("input[type='checkbox']:checked"),function(){
+ 				delId.ids.push("{id:"+$(this).val()+"}");	
+ 		});	
+ 		//var jsonObject = ;
+ 		var jsonObject = JSON.stringify(delId);
+ 
+ 		$.ajax({
+			type: 'post',
+	        url: 'deleteStudent',
+	        data: jsonObject,
+	        dataType: "json",
+	        success: function (response) {
+	        	if(response.success == true){
+	        		alert("删除成功");
+	        		window.location.reload();
+	        	}
+	        	else{
+	        		alert("删除失败，请稍后再试");
+	        		return;
+	        	}
+	        }
+		});	
+ 	}
+</script>
+<body>
+<div class="head">
+	<div class="container">
+		<nav class="head-nav">
+			<a class="head-nav-item active" href="admin.html">报名管理系统</a>
+			<a class="head-nav-item " href="zhgl.html">账号管理</a>
+			<a class="head-nav-item " href="#" onclick="logout()">退出</a>
+		</nav>
+	</div>
+</div>
+<div class="container">
+	<h3 class="sub-header">名单</h3>
+    <div class="table-responsive">
+         <table id="signupList" class="table table-striped">
+         	<thead>
+             	<tr>
+               	<th>姓名</th>
+               	<th>性别</th>
+               	<th>手机</th>
+               	<th>备用电话</th>
+               	<th>Email</th>
+               	<th>qq</th>
+               	<th>毕业院校</th>
+               	<th>毕业专业</th>
+               	<th>报考专业</th>
+               	<th></th>
+             	</tr>    	
+           </thead>
+           <tbody></tbody>
+       </table>
+	</div>
+	<div>
+	<button type="button" class="btn btn-danger" onclick="confirms()">删除</button>
+	<button type="button" class="btn btn-primary page" id="lastPage" >上一页</button>
+	<button type="button" class="btn btn-primary page" id="nextPage" >下一页</button></div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="warn"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:330px;margin-top:200px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">提示</h4>
+      </div>
+      <div class="modal-body">
+       确认删除这些数据？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-danger" onclick="deleteStu()">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>浙江大学软件学院预报名管理系统</title>
+	<script src="../Scripts/jquery.min.js"></script>
+	<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" />
+	<!-- Custom styles for this template -->
+    <link href="../css/signin.css" rel="stylesheet">
+</head>
+<script>
+$(function () {
+	$(":submit").click(function () {
+		var dataObject = {
+			username:trim($("[name='username']").first().val()),
+			password:$("[name='password']").first().val()
+		};
+		$.ajax({
+            type: 'post',
+            url: 'login',
+            data: dataObject,
+            dataType: "json",
+            success: function (response) {
+                if (response.success === true) {
+                	location.href="admin.html";	
+                } else {
+                    alert('用户名密码错误请重新输入！');
+                    $("[name='username']").focus();
+                }
+            }
+        });
+        return false;
+	});
+	function trim(str) {
+        return str.replace(/(^\s*)|(\s*$)/g, '');
+    }
+});
+</script>
+<body>
+	<div class="container">
+      <div class="form">
+        <h2 class="form-signin-heading">管理员登陆</h2>
+        <label for="inputUserName" class="sr-only">用户名</label>
+        <input type="text" id="inputUserName" name="username" class="form-control" placeholder="用户名" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登陆</button>
+      </div>
+
+    </div> <!-- /container -->
+
+</body>
+</html>

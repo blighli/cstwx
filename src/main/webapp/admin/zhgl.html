@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>浙江大学软件学院预报名管理系统</title>
+<script src="../Scripts/jquery.min.js"></script>
+<link href="../bootstrap/css/bootstrap.css" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link href="../css/admin.css" rel="stylesheet" />
+</head>
+<script>
+$(function () {
+    $("ul.nav a").click(function () {
+        var href = $(this).attr("href").toString().replace("#", "") + ".html";
+        href = "usermanagement/" + href;
+        $("#form").load(href);
+
+        $("ul.nav li").removeClass("active");
+        $(this).parent().addClass("active");
+        var bt = $("#bt_submit");
+        if($(this).context.text=="修改密码"){
+        	bt.title = "changepwd";
+        }else{
+        	bt.title = "changename";
+        	
+        }
+        //set bt onclick function
+        bt.click(function(){
+        	if(this.title == "changename"){
+        		var dataObject = {
+        				username:trim($("#username").first().val()),
+        				password:$("#password").first().val()
+        			};
+       			$.ajax({
+       	            type: 'post',
+       	            url: 'changeName',
+       	            data: dataObject,
+       	            dataType: "json",
+       	            success: function (response) {
+       	            	if(response.isLogin == false){
+       	             		alert("您尚未登陆，请先登陆！");
+       	           	  		location.href ="login.html";
+       	           	  		return;
+       	             	}
+       	                if (response.success === true) {
+       	                	alert(response.msg);
+       	                	location.href="login.html";
+       	                } else {
+       	                    alert(response.msg);
+       	                    $("#password").focus();
+       	                }
+       	            }
+        		}); 
+        	}else{
+        		var newPwd1 = $("#newPassword1").val();
+        		var newPwd2 = $("#newPassword2").val();
+        		if(newPwd1!="" && newPwd1!=newPwd2){
+        			alert("两次密码输入不一致！");
+        			 $("#newPassword2").focus();
+        			return;
+        		}
+        		var dataObject = {
+        				newPassword:$("#newPassword1").first().val(),
+        				oldPassword:$("#oldPassword").first().val()
+        			};
+       			$.ajax({
+       	            type: 'post',
+       	            url: 'changePwd',
+       	            data: dataObject,
+       	            dataType: "json",
+       	            success: function (response) {
+       	            	if(response.isLogin == false){
+       	             		alert("您尚未登陆，请先登陆！");
+       	             		location.href ="login.html";
+       	             		return;
+       	             	}
+       	                if (response.success === true) {
+       	                	alert(response.msg);
+       	                	location.href="login.html";
+       	                } else {
+       	                    alert(response.msg);
+       	                    $("[name='oldPassword']").focus();
+       	                }
+       	            }
+       	        });
+        	}
+        	return false;
+        });
+    });
+    var hash = window.location.hash === "" ? $("ul.nav a").first().attr("href") : window.location.hash;
+    $("a[href='" + hash + "']").click();
+    
+    function trim(str) {
+        return str.replace(/(^\s*)|(\s*$)/g, '');
+    }
+});
+
+function logout(){
+	$.ajax({
+		type: 'post',
+        url: 'logout',
+        dataType: "json",
+        success: function (response) {
+        	if(response.isLogin == false){
+            	alert("您尚未登陆，请先登陆！");
+            	location.href ="login.html";
+            	return;
+            }
+        	if(response.success == true){
+        		alert("退出成功");
+        		location.href="login.html";
+        	}
+        	else{
+        		alert("退出失败！");
+        		window.location.reload();
+        	}
+        }
+	});
+}
+function checkPwd(){
+	var patrn = /^(\w){6,20}$/;
+	if(!patrn.exec($("#newPassword1").val())){
+		alert("密码太简单，请输入以字母开头，长度在6-18之间，且能包含字符、数字和下划线");
+		$("#newPassword1").focus();
+	}
+	
+}
+</script>
+<body>
+	<div class="head">
+		<div class="container">
+			<nav class="head-nav">
+				<a class="head-nav-item " href="admin.html">报名管理系统</a> <a
+					class="head-nav-item active" href="zhgl.html">账号管理</a> <a
+					class="head-nav-item " href="#" onclick="logout()">退出</a>
+			</nav>
+		</div>
+	</div>
+	<div class="col-sm-3 col-md-2 sidebar">
+		<ul class="nav nav-sidebar">
+			<li><a href="#changename" >修改用户名<span class="sr-only"></span></a></li>
+			<li><a href="#changepassword">修改密码</a></li>
+		</ul>
+	</div>
+	<div id="form" class="panel-container"></div>
+	<div class="button-field">
+		<button id="bt_submit" type="button" class="btn btn-primary">提交修改</button>
+		<button type="button" class="btn btn-default">取消</button>
+	</div>
+</body>
+</html>

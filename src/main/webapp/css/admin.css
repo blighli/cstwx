@@ -1,0 +1,95 @@
+@CHARSET "UTF-8";
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+
+.head {
+	background-color:rgb(51, 122, 183);
+	height: 40px;
+}
+.head-nav .active {
+  color: #fff;
+}
+.head-nav .active:after{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid;
+  border-left: 5px solid transparent;
+}
+.head-nav-item {
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  font-weight: 500;
+  color: #cdddeb;
+}
+.head-nav-item:hover,
+.head-nav-item:focus {
+  color: #fff;
+  text-decoration: none;
+}
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.panel-container {
+	padding-top:50px;
+	max-width: 330px;
+	margin-left:200px;
+}
+.panel-title{
+	font-size:14px;
+}
+.nav-sidebar {
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+.sidebar{
+	left: 0;
+	position: fixed;
+	padding-top:50px;
+}
+.button-field{
+	padding-top:2px;
+	max-width: 330px;
+	margin-left:200px;
+}
+#newPassword1,#username{
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#newPassword2{
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-bottom: -1px;
+}
+#oldPassword{
+	margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.page{
+	display:inline;
+}
