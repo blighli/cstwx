@@ -58,7 +58,7 @@ public class AdminChangeNameServlet extends HttpServlet {
 			AdminService adminService = new AdminService();
 			boolResult = adminService.modify(newAdmin);
 			if(boolResult){
-				msg = "修改成功,请重新登录";
+				msg = "Change OK";
 				session.invalidate();
 			}
 			else{
