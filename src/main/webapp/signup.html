@@ -19,7 +19,7 @@
 
                 var dataObject = {
                     XingMing: trim($("[name='name']").first().val()),
-                    XingBie: $("[name='gender'][checked]").val(),
+                    XingBie: $('input[type= "radio"]:checked').val(),
                     ShouJi: trim($("[name='phone']").first().val()),
                     BeiYongDianHua: trim($("[name='phone2']").first().val()),
                     Email: trim($("[name='email']").first().val()),
