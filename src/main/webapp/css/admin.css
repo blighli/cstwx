@@ -9,6 +9,9 @@
 	background-color:rgb(51, 122, 183);
 	height: 40px;
 }
+.container {
+	margin-left:100px;
+}
 .head-nav .active {
   color: #fff;
 }
@@ -43,8 +46,9 @@
 }
 .panel-container {
 	padding-top:50px;
-	max-width: 330px;
+	width: 330px;
 	margin-left:200px;
+	position:relative;
 }
 .panel-title{
 	font-size:14px;
@@ -52,6 +56,7 @@
 .nav-sidebar {
   margin-bottom: 20px;
   margin-left: -20px;
+  width:180px;
 }
 .nav-sidebar > li > a {
   padding-left: 20px;
